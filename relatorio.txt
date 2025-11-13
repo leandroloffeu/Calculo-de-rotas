@@ -1,0 +1,68 @@
+================================================================================
+RELATÓRIO: OTIMIZAÇÃO DE ROTAS DE ENTREGA
+================================================================================
+
+1. ESCOLHAS E MODELAGEM
+--------------------------------------------------------------------------------
+Cidades escolhidas: São Paulo, Campinas, Ribeirão Preto, Sorocaba, Rio de Janeiro, Belo Horizonte, Curitiba
+Armazém: São Paulo
+Clientes: Rio de Janeiro, Belo Horizonte, Curitiba
+Total de estradas: 14
+
+Estradas e custos:
+  • São Paulo -> Campinas: 100 unidades
+  • São Paulo -> Sorocaba: 90 unidades
+  • São Paulo -> Ribeirão Preto: 310 unidades
+  • São Paulo -> Rio de Janeiro: 430 unidades
+  • São Paulo -> Curitiba: 410 unidades
+  • Campinas -> Rio de Janeiro: 350 unidades
+  • Campinas -> Belo Horizonte: 580 unidades
+  • Campinas -> Sorocaba: 120 unidades
+  • Ribeirão Preto -> Belo Horizonte: 520 unidades
+  • Ribeirão Preto -> Campinas: 220 unidades
+  • Sorocaba -> Curitiba: 280 unidades
+  • Sorocaba -> Campinas: 120 unidades
+  • Rio de Janeiro -> Belo Horizonte: 440 unidades
+  • Belo Horizonte -> Curitiba: 980 unidades
+
+2. CAMINHOS MÍNIMOS
+--------------------------------------------------------------------------------
+Rota São Paulo -> Rio de Janeiro:
+  Caminho: São Paulo -> Rio de Janeiro
+  Custo: 430 unidades
+Rota São Paulo -> Belo Horizonte:
+  Caminho: São Paulo -> Campinas -> Belo Horizonte
+  Custo: 680 unidades
+Rota São Paulo -> Curitiba:
+  Caminho: São Paulo -> Sorocaba -> Curitiba
+  Custo: 370 unidades
+
+3. ROTAS ALTERNATIVAS (APÓS FALHA)
+--------------------------------------------------------------------------------
+Rota alternativa São Paulo -> Rio de Janeiro:
+  Caminho: São Paulo -> Rio de Janeiro
+  Custo: 430 unidades
+Rota alternativa São Paulo -> Belo Horizonte:
+  Caminho: São Paulo -> Sorocaba -> Campinas -> Belo Horizonte
+  Custo: 790 unidades
+Rota alternativa São Paulo -> Curitiba:
+  Caminho: São Paulo -> Sorocaba -> Curitiba
+  Custo: 370 unidades
+
+4. ANÁLISE DE ROBUSTEZ
+--------------------------------------------------------------------------------
+Estradas críticas encontradas: 0
+
+Cidades críticas encontradas: 3
+  • Ribeirão Preto: Poucas conexões (ponto único de passagem)
+  • Rio de Janeiro: Poucas conexões (ponto único de passagem)
+  • Belo Horizonte: Poucas conexões (ponto único de passagem)
+
+5. CONCLUSÕES
+--------------------------------------------------------------------------------
+• A rede de distribuição foi modelada com sucesso usando grafos direcionados.
+• Os caminhos mínimos foram calculados usando método manual (busca em profundidade).
+• A análise de robustez identificou estradas e cidades críticas na rede.
+• A simulação de falhas demonstrou a importância de ter rotas alternativas.
+
+================================================================================
