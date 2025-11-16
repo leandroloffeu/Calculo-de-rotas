@@ -1,0 +1,305 @@
+================================================================================
+TEXTOS PARA APRESENTAÇÃO - OTIMIZAÇÃO DE ROTAS DE ENTREGA
+================================================================================
+
+Copie e cole estes textos diretamente nos seus slides.
+
+================================================================================
+SLIDE 1: TÍTULO
+================================================================================
+
+TÍTULO PRINCIPAL:
+OTIMIZAÇÃO DE ROTAS DE ENTREGA
+
+SUBTÍTULO:
+Análise de Redes de Distribuição usando Grafos
+
+INFORMAÇÕES:
+Disciplina: Estruturas de Dados / Algoritmos e Grafos
+Projeto: Modelagem e Análise de Redes de Logística
+Ano: 2024
+
+================================================================================
+SLIDE 2: CONTEXTO E MOTIVAÇÃO
+================================================================================
+
+TÍTULO:
+CONTEXTO E MOTIVAÇÃO
+
+SEÇÃO 1 - PROBLEMA REAL:
+Problema Real:
+
+• Empresas de logística precisam otimizar rotas de entrega
+• Redes de distribuição conectam armazéns e clientes
+• Cada conexão tem um custo (distância, tempo, combustível)
+• Necessidade de encontrar rotas mais eficientes
+• Análise de robustez da rede (falhas, alternativas)
+
+SEÇÃO 2 - REFERÊNCIA DO PROJETO:
+Referência do Projeto:
+
+• Prefeitura Municipal de Maricá (PMM)
+• Estrutura de rede de infraestrutura municipal
+• Múltiplos sites interconectados (Data Center, Subestações, GGIM)
+• Conexões P2P entre diferentes pontos da cidade
+• Análise de tráfego e otimização de rotas de dados
+
+DESTAQUE (BOX):
+A estrutura de rede da PMM serviu como referência para modelar a rede de 
+distribuição de mercadorias, adaptando conceitos de otimização de rotas de 
+dados para otimização de rotas de entrega.
+
+================================================================================
+SLIDE 3: ESTRUTURA DE REDE - PREFEITURA MUNICIPAL DE MARICÁ
+================================================================================
+
+TÍTULO:
+ESTRUTURA DE REDE - PREFEITURA MUNICIPAL DE MARICÁ
+
+TEXTO EXPLICATIVO:
+A rede da PMM apresenta uma topologia complexa com três sites principais:
+
+Site 1 - Data Center PMM: Centro de processamento principal
+• OLTs conectando clientes FTTH (Centro)
+• Roteadores CR1 (HP e Huawei)
+• Conexão com Internet e servidores
+
+Site 2 - Sub. Itaipuacu: Subestação de rede
+• Roteadores CR6 (HP e Huawei)
+• Conexões P2P com outros sites
+
+Site 3 - GGIM: Gestão e monitoramento
+• Roteadores GGIM (Huawei)
+• Servidores CFTV
+• Conexões com CRB e CR3
+
+Características observadas:
+• Links P2P bidirecionais com métricas de tráfego
+• Múltiplos caminhos entre pontos (redundância)
+• Diferentes tipos de conexão (sólidas e tracejadas)
+• Monitoramento de status (OK) dos equipamentos
+
+DESTAQUE (BOX):
+Esta estrutura inspirou a modelagem do projeto:
+Sites → Cidades
+Links P2P → Estradas
+Métricas de Tráfego → Custos de Transporte
+
+NOTA RODAPÉ:
+(Imagem: Topologia de Rede da Prefeitura Municipal de Maricá)
+
+================================================================================
+SLIDE 4: OBJETIVOS DO PROJETO
+================================================================================
+
+TÍTULO:
+OBJETIVOS DO PROJETO
+
+OBJETIVO GERAL:
+Objetivo Geral
+
+Desenvolver um sistema de análise de rotas de entrega utilizando conceitos 
+de grafos para otimização de redes de distribuição.
+
+OBJETIVOS ESPECÍFICOS:
+Objetivos Específicos
+
+• Modelar rede de distribuição como grafo direcionado
+• Calcular caminhos mínimos entre armazém e clientes
+• Analisar robustez da rede (falhas e alternativas)
+• Visualizar topologia e métricas da rede
+• Comparar diferentes configurações de rede
+
+APLICAÇÃO PRÁTICA:
+Aplicação Prática
+
+Adaptação dos conceitos observados na rede da PMM para otimização de rotas 
+de entrega de mercadorias.
+
+================================================================================
+SLIDE 5: METODOLOGIA
+================================================================================
+
+TÍTULO:
+METODOLOGIA
+
+ETAPA 1:
+1. Representação do Grafo
+
+• Escolha de cidades (mínimo 3)
+• Criação de estradas com custos
+• Modelagem usando NetworkX
+• Visualização com Matplotlib
+
+ETAPA 2:
+2. Cálculo de Caminho Mínimo
+
+• Método manual (busca em profundidade)
+• Exploração de todos os caminhos possíveis
+• Seleção do caminho de menor custo
+• Cálculo sem algoritmos avançados
+
+ETAPA 3:
+3. Análise de Robustez
+
+• Simulação de falhas (remoção de arestas)
+• Identificação de rotas alternativas
+• Análise de estradas críticas
+• Identificação de cidades críticas
+
+ETAPA 4:
+4. Visualização e Análise
+
+• Dashboard interativo
+• Gráficos de distribuição
+• Análise de centralidade
+• Comparação de resultados
+
+================================================================================
+SLIDE 6: RESULTADOS PRINCIPAIS
+================================================================================
+
+TÍTULO:
+RESULTADOS PRINCIPAIS
+
+RESULTADO 1 - REDE MODELADA:
+Rede Modelada
+
+• 7 cidades
+• 12 estradas
+• 1 armazém (São Paulo)
+• 3 clientes (Rio de Janeiro, Belo Horizonte, Curitiba)
+
+RESULTADO 2 - CAMINHOS MÍNIMOS:
+Caminhos Mínimos
+
+• Rotas otimizadas calculadas
+• Custos totais por rota
+• Visualização dos caminhos
+• Comparação de alternativas
+
+RESULTADO 3 - ANÁLISE DE ROBUSTEZ:
+Análise de Robustez
+
+• Estradas críticas identificadas
+• Rotas alternativas mapeadas
+• Impacto de falhas analisado
+• Pontos de falha únicos detectados
+
+RESULTADO 4 - FERRAMENTAS DESENVOLVIDAS:
+Ferramentas Desenvolvidas
+
+• Programa principal (5 partes)
+• Dashboard interativo
+• Dashboard avançado
+• Relatórios automáticos
+
+================================================================================
+SLIDE 7: CONCLUSÕES
+================================================================================
+
+TÍTULO:
+CONCLUSÕES
+
+TEXTO PRINCIPAL:
+• O projeto demonstrou a aplicabilidade prática de grafos na otimização de rotas
+
+• A estrutura de rede da PMM serviu como excelente referência para modelagem
+
+• O método manual de cálculo de caminhos mínimos permitiu compreender os 
+  algoritmos fundamentais sem depender de bibliotecas avançadas
+
+• A análise de robustez identificou pontos críticos na rede, essenciais para 
+  garantir continuidade operacional
+
+• As visualizações desenvolvidas facilitam a compreensão da topologia e das 
+  métricas da rede
+
+• O projeto alcançou todos os objetivos propostos, demonstrando conhecimento 
+  prático em estruturas de dados e algoritmos
+
+BOX DE APRENDIZADOS:
+Aprendizados: Modelagem de problemas reais, análise de grafos, visualização 
+de dados e desenvolvimento de soluções práticas.
+
+================================================================================
+SLIDE 8: AGRADECIMENTOS
+================================================================================
+
+TÍTULO:
+AGRADECIMENTOS
+
+TEXTO PRINCIPAL:
+Prefeitura Municipal de Maricá
+
+Pela disponibilização da estrutura de rede como referência para este projeto 
+acadêmico
+
+FINALIZAÇÃO:
+Obrigado!
+
+================================================================================
+TEXTOS ADICIONAIS PARA EXPLICAÇÕES ORAL
+================================================================================
+
+EXPLICAÇÃO SLIDE 2 (CONTEXTO):
+O problema de otimização de rotas é muito comum em logística. Empresas precisam 
+entregar mercadorias de forma eficiente, minimizando custos. A Prefeitura 
+Municipal de Maricá possui uma estrutura de rede complexa que serviu como 
+inspiração para este projeto. Observamos como eles conectam diferentes sites 
+através de links P2P, monitoram tráfego e mantêm redundância. Adaptamos esses 
+conceitos para o contexto de distribuição de mercadorias.
+
+EXPLICAÇÃO SLIDE 3 (REDE PMM):
+A rede da PMM possui três sites principais. O Site 1 é o Data Center principal, 
+onde estão os OLTs que conectam clientes FTTH e os roteadores principais. O Site 2 
+é uma subestação com roteadores CR6. O Site 3 é o GGIM, responsável por gestão e 
+monitoramento. Todos estão interconectados através de links P2P com métricas de 
+tráfego bidirecionais. Esta estrutura nos mostrou como modelar uma rede com 
+múltiplos pontos de conexão e diferentes caminhos possíveis.
+
+EXPLICAÇÃO SLIDE 4 (OBJETIVOS):
+Nosso objetivo principal era desenvolver um sistema completo de análise de rotas. 
+Para isso, definimos objetivos específicos que cobrem desde a modelagem básica até 
+análises avançadas. A aplicação prática foi adaptar os conceitos da rede PMM, 
+transformando sites em cidades, links P2P em estradas, e métricas de tráfego em 
+custos de transporte.
+
+EXPLICAÇÃO SLIDE 5 (METODOLOGIA):
+Desenvolvemos o projeto em quatro etapas principais. Primeiro, modelamos a rede 
+como um grafo usando NetworkX. Depois, implementamos um método manual de cálculo 
+de caminhos mínimos usando busca em profundidade, sem algoritmos avançados, para 
+compreender melhor os conceitos fundamentais. Em seguida, analisamos a robustez 
+simulando falhas. Por fim, criamos visualizações interativas para facilitar a 
+compreensão.
+
+EXPLICAÇÃO SLIDE 6 (RESULTADOS):
+Conseguimos modelar uma rede com 7 cidades e 12 estradas, conectando um armazém 
+em São Paulo a três clientes principais. Calculamos os caminhos mínimos para cada 
+cliente e identificamos estradas críticas que, se falharem, tornam algumas rotas 
+impossíveis. Desenvolvemos dashboards interativos que mostram todas essas análises 
+de forma visual e intuitiva.
+
+EXPLICAÇÃO SLIDE 7 (CONCLUSÕES):
+O projeto foi muito enriquecedor. Conseguimos aplicar teoria de grafos em um 
+problema real, usando a estrutura da PMM como referência. O método manual nos 
+permitiu entender profundamente como funcionam os algoritmos de caminho mínimo. 
+A análise de robustez mostrou a importância de ter rotas alternativas. E as 
+visualizações facilitaram muito a compreensão da topologia da rede.
+
+================================================================================
+DICAS PARA APRESENTAÇÃO
+================================================================================
+
+1. Comece explicando o problema real de logística
+2. Destaque a conexão com a rede da PMM como referência
+3. Mostre a imagem da rede PMM e explique a analogia
+4. Demonstre o programa funcionando (opcional)
+5. Mostre os dashboards gerados
+6. Enfatize os aprendizados práticos
+7. Agradeça à PMM pela referência
+
+TEMPO SUGERIDO: 10-15 minutos
+
+================================================================================
+

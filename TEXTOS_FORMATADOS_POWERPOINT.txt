@@ -1,0 +1,255 @@
+================================================================================
+TEXTOS FORMATADOS PARA POWERPOINT/GOOGLE SLIDES
+================================================================================
+Copie cada seção e cole diretamente nos slides correspondentes.
+
+================================================================================
+SLIDE 1 - TÍTULO
+================================================================================
+
+[CAIXA DE TEXTO 1 - TÍTULO PRINCIPAL]
+OTIMIZAÇÃO DE ROTAS DE ENTREGA
+
+[CAIXA DE TEXTO 2 - SUBTÍTULO]
+Análise de Redes de Distribuição usando Grafos
+
+[CAIXA DE TEXTO 3 - INFORMAÇÕES]
+Disciplina: Estruturas de Dados / Algoritmos e Grafos
+Projeto: Modelagem e Análise de Redes de Logística
+Ano: 2024
+
+================================================================================
+SLIDE 2 - CONTEXTO E MOTIVAÇÃO
+================================================================================
+
+[CAIXA DE TEXTO 1 - TÍTULO]
+CONTEXTO E MOTIVAÇÃO
+
+[CAIXA DE TEXTO 2 - SEÇÃO PROBLEMA REAL]
+Problema Real:
+
+• Empresas de logística precisam otimizar rotas de entrega
+• Redes de distribuição conectam armazéns e clientes
+• Cada conexão tem um custo (distância, tempo, combustível)
+• Necessidade de encontrar rotas mais eficientes
+• Análise de robustez da rede (falhas, alternativas)
+
+[CAIXA DE TEXTO 3 - SEÇÃO REFERÊNCIA]
+Referência do Projeto:
+
+• Prefeitura Municipal de Maricá (PMM)
+• Estrutura de rede de infraestrutura municipal
+• Múltiplos sites interconectados (Data Center, Subestações, GGIM)
+• Conexões P2P entre diferentes pontos da cidade
+• Análise de tráfego e otimização de rotas de dados
+
+[CAIXA DE TEXTO 4 - BOX DESTAQUE]
+A estrutura de rede da PMM serviu como referência para modelar a rede de 
+distribuição de mercadorias, adaptando conceitos de otimização de rotas de 
+dados para otimização de rotas de entrega.
+
+================================================================================
+SLIDE 3 - ESTRUTURA DE REDE PMM
+================================================================================
+
+[CAIXA DE TEXTO 1 - TÍTULO]
+ESTRUTURA DE REDE - PREFEITURA MUNICIPAL DE MARICÁ
+
+[INSERIR IMAGEM DA REDE PMM AQUI]
+
+[CAIXA DE TEXTO 2 - EXPLICAÇÃO]
+A rede da PMM apresenta uma topologia complexa com três sites principais:
+
+Site 1 - Data Center PMM: Centro de processamento principal
+• OLTs conectando clientes FTTH (Centro)
+• Roteadores CR1 (HP e Huawei)
+• Conexão com Internet e servidores
+
+Site 2 - Sub. Itaipuacu: Subestação de rede
+• Roteadores CR6 (HP e Huawei)
+• Conexões P2P com outros sites
+
+Site 3 - GGIM: Gestão e monitoramento
+• Roteadores GGIM (Huawei)
+• Servidores CFTV
+• Conexões com CRB e CR3
+
+Características observadas:
+• Links P2P bidirecionais com métricas de tráfego
+• Múltiplos caminhos entre pontos (redundância)
+• Diferentes tipos de conexão (sólidas e tracejadas)
+• Monitoramento de status (OK) dos equipamentos
+
+[CAIXA DE TEXTO 3 - BOX DESTAQUE]
+Esta estrutura inspirou a modelagem do projeto:
+Sites → Cidades
+Links P2P → Estradas
+Métricas de Tráfego → Custos de Transporte
+
+[CAIXA DE TEXTO 4 - NOTA RODAPÉ]
+(Imagem: Topologia de Rede da Prefeitura Municipal de Maricá)
+
+================================================================================
+SLIDE 4 - OBJETIVOS
+================================================================================
+
+[CAIXA DE TEXTO 1 - TÍTULO]
+OBJETIVOS DO PROJETO
+
+[CAIXA DE TEXTO 2 - OBJETIVO GERAL]
+Objetivo Geral
+
+Desenvolver um sistema de análise de rotas de entrega utilizando conceitos 
+de grafos para otimização de redes de distribuição.
+
+[CAIXA DE TEXTO 3 - OBJETIVOS ESPECÍFICOS]
+Objetivos Específicos
+
+• Modelar rede de distribuição como grafo direcionado
+• Calcular caminhos mínimos entre armazém e clientes
+• Analisar robustez da rede (falhas e alternativas)
+• Visualizar topologia e métricas da rede
+• Comparar diferentes configurações de rede
+
+[CAIXA DE TEXTO 4 - APLICAÇÃO PRÁTICA]
+Aplicação Prática
+
+Adaptação dos conceitos observados na rede da PMM para otimização de rotas 
+de entrega de mercadorias.
+
+================================================================================
+SLIDE 5 - METODOLOGIA
+================================================================================
+
+[CAIXA DE TEXTO 1 - TÍTULO]
+METODOLOGIA
+
+[CAIXA DE TEXTO 2 - ETAPA 1]
+1. Representação do Grafo
+
+• Escolha de cidades (mínimo 3)
+• Criação de estradas com custos
+• Modelagem usando NetworkX
+• Visualização com Matplotlib
+
+[CAIXA DE TEXTO 3 - ETAPA 2]
+2. Cálculo de Caminho Mínimo
+
+• Método manual (busca em profundidade)
+• Exploração de todos os caminhos possíveis
+• Seleção do caminho de menor custo
+• Cálculo sem algoritmos avançados
+
+[CAIXA DE TEXTO 4 - ETAPA 3]
+3. Análise de Robustez
+
+• Simulação de falhas (remoção de arestas)
+• Identificação de rotas alternativas
+• Análise de estradas críticas
+• Identificação de cidades críticas
+
+[CAIXA DE TEXTO 5 - ETAPA 4]
+4. Visualização e Análise
+
+• Dashboard interativo
+• Gráficos de distribuição
+• Análise de centralidade
+• Comparação de resultados
+
+================================================================================
+SLIDE 6 - RESULTADOS
+================================================================================
+
+[CAIXA DE TEXTO 1 - TÍTULO]
+RESULTADOS PRINCIPAIS
+
+[CAIXA DE TEXTO 2 - RESULTADO 1]
+Rede Modelada
+
+• 7 cidades
+• 12 estradas
+• 1 armazém (São Paulo)
+• 3 clientes (Rio de Janeiro, Belo Horizonte, Curitiba)
+
+[CAIXA DE TEXTO 3 - RESULTADO 2]
+Caminhos Mínimos
+
+• Rotas otimizadas calculadas
+• Custos totais por rota
+• Visualização dos caminhos
+• Comparação de alternativas
+
+[CAIXA DE TEXTO 4 - RESULTADO 3]
+Análise de Robustez
+
+• Estradas críticas identificadas
+• Rotas alternativas mapeadas
+• Impacto de falhas analisado
+• Pontos de falha únicos detectados
+
+[CAIXA DE TEXTO 5 - RESULTADO 4]
+Ferramentas Desenvolvidas
+
+• Programa principal (5 partes)
+• Dashboard interativo
+• Dashboard avançado
+• Relatórios automáticos
+
+================================================================================
+SLIDE 7 - CONCLUSÕES
+================================================================================
+
+[CAIXA DE TEXTO 1 - TÍTULO]
+CONCLUSÕES
+
+[CAIXA DE TEXTO 2 - TEXTO PRINCIPAL]
+• O projeto demonstrou a aplicabilidade prática de grafos na otimização de rotas
+
+• A estrutura de rede da PMM serviu como excelente referência para modelagem
+
+• O método manual de cálculo de caminhos mínimos permitiu compreender os 
+  algoritmos fundamentais sem depender de bibliotecas avançadas
+
+• A análise de robustez identificou pontos críticos na rede, essenciais para 
+  garantir continuidade operacional
+
+• As visualizações desenvolvidas facilitam a compreensão da topologia e das 
+  métricas da rede
+
+• O projeto alcançou todos os objetivos propostos, demonstrando conhecimento 
+  prático em estruturas de dados e algoritmos
+
+[CAIXA DE TEXTO 3 - BOX APRENDIZADOS]
+Aprendizados: Modelagem de problemas reais, análise de grafos, visualização 
+de dados e desenvolvimento de soluções práticas.
+
+================================================================================
+SLIDE 8 - AGRADECIMENTOS
+================================================================================
+
+[CAIXA DE TEXTO 1 - TÍTULO]
+AGRADECIMENTOS
+
+[CAIXA DE TEXTO 2 - TEXTO PRINCIPAL]
+Prefeitura Municipal de Maricá
+
+Pela disponibilização da estrutura de rede como referência para este projeto 
+acadêmico
+
+[CAIXA DE TEXTO 3 - FINALIZAÇÃO]
+Obrigado!
+
+================================================================================
+INSTRUÇÕES DE USO
+================================================================================
+
+1. Abra PowerPoint ou Google Slides
+2. Crie 8 slides em branco
+3. Para cada slide, copie o texto correspondente
+4. Cole nas caixas de texto dos slides
+5. Ajuste fontes e tamanhos conforme necessário
+6. No slide 3, insira a imagem da rede PMM
+7. Adicione cores e formatação para melhor visual
+
+================================================================================
+
