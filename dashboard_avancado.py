@@ -29,49 +29,59 @@ class DashboardAvancado:
     
     def criar_dashboard(self):
         """Cria dashboard avançado completo."""
-        self.fig = plt.figure(figsize=(22, 14))
+        plt.style.use('dark_background')
+        self.fig = plt.figure(figsize=(22, 14), facecolor='#1a1a1a')
         gs = GridSpec(4, 4, figure=self.fig, hspace=0.35, wspace=0.35)
         
         self.calcular_posicionamento()
         
         # Painel 1: Rede completa com caminhos mínimos destacados
         ax1 = self.fig.add_subplot(gs[0:2, 0:2])
+        ax1.set_facecolor('#1a1a1a')
         self._plotar_rede_com_caminhos(ax1)
         
         # Painel 2: Tabela de rotas
         ax2 = self.fig.add_subplot(gs[0, 2:4])
+        ax2.set_facecolor('#1a1a1a')
         self._plotar_tabela_rotas(ax2)
         
         # Painel 3: Matriz de custos
         ax3 = self.fig.add_subplot(gs[1, 2:4])
+        ax3.set_facecolor('#1a1a1a')
         self._plotar_matriz_custos(ax3)
         
         # Painel 4: Análise de falhas
         ax4 = self.fig.add_subplot(gs[2, 0:2])
+        ax4.set_facecolor('#1a1a1a')
         self._plotar_analise_falhas(ax4)
         
         # Painel 5: Comparação de rotas
         ax5 = self.fig.add_subplot(gs[2, 2])
+        ax5.set_facecolor('#1a1a1a')
         self._plotar_comparacao_rotas(ax5)
         
         # Painel 6: Topologia da rede
         ax6 = self.fig.add_subplot(gs[2, 3])
+        ax6.set_facecolor('#1a1a1a')
         self._plotar_topologia(ax6)
         
         # Painel 7: Métricas de performance
         ax7 = self.fig.add_subplot(gs[3, 0])
+        ax7.set_facecolor('#1a1a1a')
         self._plotar_metricas(ax7)
         
         # Painel 8: Cidades críticas
         ax8 = self.fig.add_subplot(gs[3, 1])
+        ax8.set_facecolor('#1a1a1a')
         self._plotar_cidades_criticas(ax8)
         
         # Painel 9: Análise de custos
         ax9 = self.fig.add_subplot(gs[3, 2:4])
+        ax9.set_facecolor('#1a1a1a')
         self._plotar_analise_custos(ax9)
         
         self.fig.suptitle('DASHBOARD AVANÇADO - ANÁLISE DETALHADA DE ROTAS', 
-                         fontsize=22, fontweight='bold', y=0.99)
+                         fontsize=22, fontweight='bold', y=0.99, color='white')
         
         plt.tight_layout(rect=[0, 0, 1, 0.98])
         return self.fig
@@ -81,26 +91,27 @@ class DashboardAvancado:
         G = self.rede.grafo
         pos = self.pos
         
-        # Desenhar todas as arestas
-        nx.draw_networkx_edges(G, pos, ax=ax, edge_color='lightgray', 
-                              width=1, alpha=0.4, arrows=True, 
-                              arrowsize=12, arrowstyle='->')
+        # Desenhar todas as arestas - mais fortes
+        nx.draw_networkx_edges(G, pos, ax=ax, edge_color='#888888', 
+                              width=2.5, alpha=0.7, arrows=True, 
+                              arrowsize=25, arrowstyle='->')
         
-        # Destacar caminhos mínimos
+        # Destacar caminhos mínimos - mais fortes
         if self.rede.armazem:
-            cores_caminhos = plt.cm.Set3(np.linspace(0, 1, len(self.rede.clientes)))
+            cores_caminhos = ['#00ff00', '#00ffff', '#ff00ff', '#ffff00', '#ff8800']
             for i, cliente in enumerate(self.rede.clientes):
                 caminho, _ = self.rede.calcular_caminho_minimo_manual(
                     self.rede.armazem, cliente)
                 if caminho and len(caminho) > 1:
                     arestas_caminho = [(caminho[j], caminho[j+1]) 
                                       for j in range(len(caminho)-1)]
+                    cor = cores_caminhos[i % len(cores_caminhos)]
                     nx.draw_networkx_edges(G, pos, edgelist=arestas_caminho, ax=ax,
-                                          edge_color=cores_caminhos[i], width=2.5, 
-                                          alpha=0.7, arrows=True, arrowsize=15,
+                                          edge_color=cor, width=5, 
+                                          alpha=0.9, arrows=True, arrowsize=30,
                                           arrowstyle='->', style='dashed')
         
-        # Nós
+        # Nós - cores vibrantes com bordas brancas
         nos_armazem = [n for n in G.nodes() if G.nodes[n].get('tipo') == 'armazem']
         nos_clientes = [n for n in G.nodes() if G.nodes[n].get('tipo') == 'cliente']
         nos_outros = [n for n in G.nodes() 
@@ -108,41 +119,43 @@ class DashboardAvancado:
         
         if nos_armazem:
             nx.draw_networkx_nodes(G, pos, nodelist=nos_armazem, ax=ax,
-                                  node_color='red', node_size=2500, 
-                                  node_shape='s', alpha=0.9, edgecolors='black', linewidths=2)
+                                  node_color='#ff3333', node_size=2500, 
+                                  node_shape='s', alpha=1.0, edgecolors='white', linewidths=3)
         if nos_clientes:
             nx.draw_networkx_nodes(G, pos, nodelist=nos_clientes, ax=ax,
-                                  node_color='blue', node_size=1800, 
-                                  node_shape='o', alpha=0.9, edgecolors='black', linewidths=2)
+                                  node_color='#3399ff', node_size=1800, 
+                                  node_shape='o', alpha=1.0, edgecolors='white', linewidths=3)
         if nos_outros:
             nx.draw_networkx_nodes(G, pos, nodelist=nos_outros, ax=ax,
-                                  node_color='lightblue', node_size=1400, 
-                                  node_shape='o', alpha=0.7, edgecolors='black', linewidths=1)
+                                  node_color='#66ccff', node_size=1400, 
+                                  node_shape='o', alpha=0.9, edgecolors='white', linewidths=2)
         
-        nx.draw_networkx_labels(G, pos, ax=ax, font_size=10, font_weight='bold')
+        nx.draw_networkx_labels(G, pos, ax=ax, font_size=11, font_weight='bold', 
+                               font_color='white')
         
         ax.set_title('Rede com Caminhos Mínimos Destacados', 
-                    fontsize=13, fontweight='bold', pad=10)
+                    fontsize=13, fontweight='bold', pad=10, color='white')
         ax.axis('off')
     
     def _plotar_tabela_rotas(self, ax):
         """Plota tabela com todas as rotas e custos."""
         if not self.rede.armazem:
             ax.text(0.5, 0.5, 'Nenhum armazém definido', 
-                   ha='center', va='center', fontsize=12)
+                   ha='center', va='center', fontsize=12, color='white')
             ax.axis('off')
             return
         
-        # Preparar dados da tabela
+        # Preparar dados da tabela - mostrar rota completa
         dados = []
         for cliente in self.rede.clientes:
             caminho, custo = self.rede.calcular_caminho_minimo_manual(
                 self.rede.armazem, cliente)
             if caminho:
-                rota_curta = ' → '.join(caminho[:3])
-                if len(caminho) > 3:
-                    rota_curta += '...'
-                dados.append([cliente, rota_curta, f'{custo:.0f}'])
+                # Mostrar rota completa, mas abreviar se muito longa
+                rota_completa = ' → '.join(caminho)
+                if len(rota_completa) > 40:
+                    rota_completa = ' → '.join(caminho[:2]) + ' → ... → ' + caminho[-1]
+                dados.append([cliente, rota_completa, f'{custo:.0f}'])
         
         # Criar tabela
         if dados:
@@ -150,18 +163,35 @@ class DashboardAvancado:
                             colLabels=['Cliente', 'Rota', 'Custo'],
                             cellLoc='left',
                             loc='center',
-                            colWidths=[0.25, 0.5, 0.25])
+                            colWidths=[0.22, 0.58, 0.20])
             tabela.auto_set_font_size(False)
-            tabela.set_fontsize(9)
-            tabela.scale(1, 2)
+            tabela.set_fontsize(10)
+            tabela.scale(1, 2.5)
             
-            # Estilizar cabeçalho
+            # Estilizar cabeçalho - mais vibrante
             for i in range(3):
-                tabela[(0, i)].set_facecolor('#4CAF50')
-                tabela[(0, i)].set_text_props(weight='bold', color='white')
+                tabela[(0, i)].set_facecolor('#00aa00')
+                tabela[(0, i)].set_text_props(weight='bold', color='white', size=11)
+                tabela[(0, i)].set_edgecolor('white')
+                tabela[(0, i)].set_linewidth(2)
+            
+            # Estilizar células - fundo escuro com texto branco
+            for i in range(len(dados)):
+                for j in range(3):
+                    # Alternar cores das linhas para melhor legibilidade
+                    if i % 2 == 0:
+                        tabela[(i+1, j)].set_facecolor('#2a2a2a')
+                    else:
+                        tabela[(i+1, j)].set_facecolor('#333333')
+                    tabela[(i+1, j)].set_text_props(color='white', size=10)
+                    tabela[(i+1, j)].set_edgecolor('#555555')
+                    tabela[(i+1, j)].set_linewidth(1)
+                    # Destacar coluna de custo
+                    if j == 2:
+                        tabela[(i+1, j)].set_text_props(color='#00ff00', weight='bold', size=11)
         
         ax.axis('off')
-        ax.set_title('Tabela de Rotas Mínimas', fontsize=12, fontweight='bold')
+        ax.set_title('Tabela de Rotas Mínimas', fontsize=13, fontweight='bold', color='white', pad=10)
     
     def _plotar_matriz_custos(self, ax):
         """Plota matriz de custos entre cidades."""
@@ -426,8 +456,9 @@ Grau médio saída: {sum(dict(G.out_degree()).values())/num_nos:.2f}
     def salvar(self, nome='dashboard_avancado.png'):
         """Salva o dashboard."""
         if self.fig:
-            self.fig.savefig(nome, dpi=300, bbox_inches='tight')
-            print(f"✓ Dashboard avançado salvo em: {nome}")
+            self.fig.savefig(nome, dpi=300, bbox_inches='tight', 
+                           facecolor='#1a1a1a', edgecolor='none')
+            print(f"[OK] Dashboard avançado salvo em: {nome}")
     
     def mostrar(self):
         """Exibe o dashboard."""
@@ -447,7 +478,7 @@ def main():
     dashboard.salvar()
     dashboard.mostrar()
     
-    print("\n✓ Dashboard avançado criado!")
+    print("\n[OK] Dashboard avançado criado!")
 
 
 if __name__ == "__main__":

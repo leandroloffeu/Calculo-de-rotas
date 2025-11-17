@@ -37,8 +37,9 @@ class DashboardRotas:
         """
         Cria um dashboard completo com múltiplas visualizações.
         """
-        # Criar figura com grid layout - mais espaçado
-        self.fig = plt.figure(figsize=(20, 12), facecolor='#f8f9fa')
+        # Criar figura com grid layout - fundo escuro
+        plt.style.use('dark_background')
+        self.fig = plt.figure(figsize=(20, 12), facecolor='#1a1a1a')
         gs = GridSpec(3, 3, figure=self.fig, hspace=0.35, wspace=0.35, 
                      left=0.05, right=0.95, top=0.93, bottom=0.07)
         
@@ -47,38 +48,38 @@ class DashboardRotas:
         
         # Painel 1: Visão geral da rede (grande, topo esquerda)
         ax1 = self.fig.add_subplot(gs[0:2, 0:2])
-        ax1.set_facecolor('white')
+        ax1.set_facecolor('#1a1a1a')
         self._plotar_rede_completa(ax1)
         
         # Painel 2: Estatísticas da rede (topo direita)
         ax2 = self.fig.add_subplot(gs[0, 2])
-        ax2.set_facecolor('#ffffff')
+        ax2.set_facecolor('#1a1a1a')
         self._plotar_estatisticas(ax2)
         
         # Painel 3: Caminhos mínimos (meio direita)
         ax3 = self.fig.add_subplot(gs[1, 2])
-        ax3.set_facecolor('#ffffff')
+        ax3.set_facecolor('#1a1a1a')
         self._plotar_caminhos_minimos(ax3)
         
         # Painel 4: Análise de robustez (baixo esquerda)
         ax4 = self.fig.add_subplot(gs[2, 0])
-        ax4.set_facecolor('#ffffff')
+        ax4.set_facecolor('#1a1a1a')
         self._plotar_robustez(ax4)
         
         # Painel 5: Distribuição de custos (baixo meio)
         ax5 = self.fig.add_subplot(gs[2, 1])
-        ax5.set_facecolor('#ffffff')
+        ax5.set_facecolor('#1a1a1a')
         self._plotar_distribuicao_custos(ax5)
         
         # Painel 6: Centralidade das cidades (baixo direita)
         ax6 = self.fig.add_subplot(gs[2, 2])
-        ax6.set_facecolor('#ffffff')
+        ax6.set_facecolor('#1a1a1a')
         self._plotar_centralidade(ax6)
         
-        # Título geral - mais sutil
+        # Título geral - branco
         self.fig.suptitle('Dashboard - Análise de Rotas de Entrega', 
                          fontsize=18, fontweight='bold', y=0.97,
-                         color='#2c3e50')
+                         color='white')
         
         return self.fig
     
@@ -87,21 +88,22 @@ class DashboardRotas:
         G = self.rede.grafo
         pos = self.pos
         
-        # Desenhar arestas - mais suaves
-        nx.draw_networkx_edges(G, pos, ax=ax, edge_color='#bdc3c7', 
-                              width=1.2, alpha=0.5, arrows=True, 
-                              arrowsize=12, arrowstyle='->')
+        # Desenhar arestas - mais fortes
+        nx.draw_networkx_edges(G, pos, ax=ax, edge_color='#888888', 
+                              width=2.5, alpha=0.7, arrows=True, 
+                              arrowsize=25, arrowstyle='->')
         
-        # Labels das arestas (custos) - apenas valores, sem texto extra
+        # Labels das arestas (custos) - branco com fundo escuro
         labels_arestas = {}
         for u, v in G.edges():
             custo = G[u][v]['custo']
             labels_arestas[(u, v)] = f'{custo}'
         
         nx.draw_networkx_edge_labels(G, pos, edge_labels=labels_arestas, 
-                                    ax=ax, font_size=8, font_color='#34495e',
+                                    ax=ax, font_size=9, font_color='white',
                                     bbox=dict(boxstyle='round,pad=0.3', 
-                                            facecolor='white', alpha=0.7, edgecolor='none'))
+                                            facecolor='#2a2a2a', alpha=0.8, 
+                                            edgecolor='white', linewidth=1))
         
         # Separar nós por tipo
         nos_armazem = [n for n in G.nodes() 
@@ -111,29 +113,29 @@ class DashboardRotas:
         nos_outros = [n for n in G.nodes() 
                      if G.nodes[n].get('tipo') not in ['armazem', 'cliente']]
         
-        # Desenhar nós - cores mais suaves
+        # Desenhar nós - cores vibrantes com bordas brancas
         if nos_armazem:
             nx.draw_networkx_nodes(G, pos, nodelist=nos_armazem, ax=ax,
-                                  node_color='#e74c3c', node_size=2200, 
-                                  node_shape='s', alpha=0.85, 
-                                  edgecolors='#c0392b', linewidths=2)
+                                  node_color='#ff3333', node_size=2200, 
+                                  node_shape='s', alpha=1.0, 
+                                  edgecolors='white', linewidths=3)
         if nos_clientes:
             nx.draw_networkx_nodes(G, pos, nodelist=nos_clientes, ax=ax,
-                                  node_color='#3498db', node_size=1600, 
-                                  node_shape='o', alpha=0.85,
-                                  edgecolors='#2980b9', linewidths=2)
+                                  node_color='#3399ff', node_size=1600, 
+                                  node_shape='o', alpha=1.0,
+                                  edgecolors='white', linewidths=3)
         if nos_outros:
             nx.draw_networkx_nodes(G, pos, nodelist=nos_outros, ax=ax,
-                                  node_color='#95a5a6', node_size=1300, 
-                                  node_shape='o', alpha=0.7,
-                                  edgecolors='#7f8c8d', linewidths=1.5)
+                                  node_color='#66ccff', node_size=1300, 
+                                  node_shape='o', alpha=0.9,
+                                  edgecolors='white', linewidths=2)
         
-        # Labels dos nós - mais limpos
-        nx.draw_networkx_labels(G, pos, ax=ax, font_size=9, font_weight='bold',
-                               font_color='#2c3e50')
+        # Labels dos nós - branco
+        nx.draw_networkx_labels(G, pos, ax=ax, font_size=10, font_weight='bold',
+                               font_color='white')
         
         ax.set_title('Rede de Distribuição', fontsize=13, fontweight='bold', 
-                    color='#2c3e50', pad=10)
+                    color='white', pad=10)
         ax.axis('off')
     
     def _plotar_estatisticas(self, ax):
@@ -164,21 +166,21 @@ class DashboardRotas:
         
         ax.text(0.5, 0.5, info_text, fontsize=10, verticalalignment='center',
                horizontalalignment='center', family='sans-serif',
-               transform=ax.transAxes, color='#2c3e50',
-               bbox=dict(boxstyle='round,pad=1', facecolor='#ecf0f1', 
-                        alpha=0.8, edgecolor='#bdc3c7', linewidth=1))
+               transform=ax.transAxes, color='white',
+               bbox=dict(boxstyle='round,pad=1', facecolor='#2a2a2a', 
+                        alpha=0.9, edgecolor='white', linewidth=2))
         
         ax.set_xlim(0, 1)
         ax.set_ylim(0, 1)
         ax.axis('off')
         ax.set_title('Estatísticas', fontsize=12, fontweight='bold', 
-                    color='#2c3e50', pad=8)
+                    color='white', pad=8)
     
     def _plotar_caminhos_minimos(self, ax):
         """Plota informações sobre caminhos mínimos."""
         if not self.rede.armazem:
             ax.text(0.5, 0.5, 'Nenhum armazém\ndefinido', 
-                   ha='center', va='center', fontsize=11, color='#7f8c8d')
+                   ha='center', va='center', fontsize=11, color='white')
             ax.axis('off')
             return
         
@@ -201,25 +203,27 @@ class DashboardRotas:
         custos = [info['custo'] for info in caminhos_info]
         
         y_pos = np.arange(len(clientes))
-        cores = plt.cm.Greens(np.linspace(0.4, 0.8, len(clientes)))
-        bars = ax.barh(y_pos, custos, color=cores, alpha=0.7, 
-                      edgecolor='white', linewidth=1.5)
+        cores = plt.cm.Greens(np.linspace(0.5, 0.9, len(clientes)))
+        bars = ax.barh(y_pos, custos, color=cores, alpha=0.8, 
+                      edgecolor='white', linewidth=2.5)
         
         # Adicionar valores nas barras
         for i, (cliente, custo) in enumerate(zip(clientes, custos)):
             ax.text(custo, i, f'  {custo:.0f}', va='center', 
-                   fontsize=9, fontweight='bold', color='#2c3e50')
+                   fontsize=9, fontweight='bold', color='white')
             ax.text(-max(custos)*0.05, i, cliente[:12], va='center', ha='right',
-                   fontsize=9, color='#34495e')
+                   fontsize=9, color='white')
         
         ax.set_yticks([])
-        ax.set_xlabel('Custo', fontsize=9, color='#7f8c8d')
+        ax.set_xlabel('Custo', fontsize=9, color='white')
+        ax.tick_params(colors='white')
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.spines['left'].set_visible(False)
-        ax.grid(True, alpha=0.2, axis='x', linestyle='--')
+        ax.spines['bottom'].set_color('white')
+        ax.grid(True, alpha=0.3, axis='x', linestyle='--', color='white')
         ax.set_title('Caminhos Mínimos', fontsize=12, fontweight='bold', 
-                    color='#2c3e50', pad=8)
+                    color='white', pad=8)
     
     def _plotar_robustez(self, ax):
         """Plota análise de robustez."""
@@ -253,45 +257,50 @@ class DashboardRotas:
             impactos = [i for _, _, i in estradas_criticas[:4]]
             
             y_pos = np.arange(len(nomes))
-            cores = ['#e74c3c' if i > 0 else '#f39c12' for i in impactos]
-            bars = ax.barh(y_pos, impactos, color=cores, alpha=0.7,
-                          edgecolor='white', linewidth=1.5)
+            cores = ['#ff4444' if i > 0 else '#ffaa00' for i in impactos]
+            bars = ax.barh(y_pos, impactos, color=cores, alpha=0.8,
+                          edgecolor='white', linewidth=2.5)
             
             for i, (nome, impacto) in enumerate(zip(nomes, impactos)):
                 ax.text(impacto, i, f'  {impacto}', va='center',
                        fontsize=9, fontweight='bold', color='white')
                 ax.text(-max(impactos)*0.1, i, nome, va='center', ha='right',
-                       fontsize=8, color='#34495e')
+                       fontsize=8, color='white')
             
             ax.set_yticks([])
-            ax.set_xlabel('Rotas Afetadas', fontsize=9, color='#7f8c8d')
+            ax.set_xlabel('Rotas Afetadas', fontsize=9, color='white')
+            ax.tick_params(colors='white')
             ax.spines['top'].set_visible(False)
             ax.spines['right'].set_visible(False)
             ax.spines['left'].set_visible(False)
-            ax.grid(True, alpha=0.2, axis='x', linestyle='--')
+            ax.spines['bottom'].set_color('white')
+            ax.grid(True, alpha=0.3, axis='x', linestyle='--', color='white')
         else:
             ax.text(0.5, 0.5, 'Nenhuma estrada\ncrítica encontrada',
-                   ha='center', va='center', fontsize=10, color='#27ae60',
-                   bbox=dict(boxstyle='round', facecolor='#d5f4e6', 
-                           alpha=0.7, edgecolor='none'))
+                   ha='center', va='center', fontsize=10, color='#00ff00',
+                   bbox=dict(boxstyle='round', facecolor='#2a2a2a', 
+                           alpha=0.8, edgecolor='white', linewidth=2))
             ax.axis('off')
         
         ax.set_title('Robustez', fontsize=12, fontweight='bold', 
-                    color='#2c3e50', pad=8)
+                    color='white', pad=8)
     
     def _plotar_distribuicao_custos(self, ax):
         """Plota distribuição de custos das estradas."""
         custos = [self.rede.grafo[u][v]['custo'] for u, v in self.rede.grafo.edges()]
         
         ax.hist(custos, bins=min(8, len(custos)), edgecolor='white', 
-               color='#3498db', alpha=0.7, linewidth=1.5)
-        ax.set_xlabel('Custo', fontsize=9, color='#7f8c8d')
-        ax.set_ylabel('Frequência', fontsize=9, color='#7f8c8d')
+               color='#3399ff', alpha=0.8, linewidth=2.5)
+        ax.set_xlabel('Custo', fontsize=9, color='white')
+        ax.set_ylabel('Frequência', fontsize=9, color='white')
+        ax.tick_params(colors='white')
         ax.set_title('Distribuição de Custos', fontsize=12, fontweight='bold',
-                    color='#2c3e50', pad=8)
+                    color='white', pad=8)
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
-        ax.grid(True, alpha=0.2, linestyle='--')
+        ax.spines['bottom'].set_color('white')
+        ax.spines['left'].set_color('white')
+        ax.grid(True, alpha=0.3, linestyle='--', color='white')
     
     def _plotar_centralidade(self, ax):
         """Plota centralidade das cidades."""
@@ -311,40 +320,43 @@ class DashboardRotas:
         
         # Criar gráfico de barras horizontal - mais limpo
         y_pos = np.arange(len(nomes))
-        cores = plt.cm.Purples(np.linspace(0.5, 0.9, len(nomes)))
-        bars = ax.barh(y_pos, valores, color=cores, alpha=0.7,
-                      edgecolor='white', linewidth=1.5)
+        cores = plt.cm.Purples(np.linspace(0.6, 1.0, len(nomes)))
+        bars = ax.barh(y_pos, valores, color=cores, alpha=0.8,
+                      edgecolor='white', linewidth=2.5)
         
         # Adicionar valores
         for i, (nome, valor) in enumerate(zip(nomes, valores)):
             ax.text(valor, i, f'  {valor:.2f}', va='center',
-                   fontsize=8, fontweight='bold', color='#2c3e50')
+                   fontsize=8, fontweight='bold', color='white')
             ax.text(-max(valores)*0.05, i, nome[:10], va='center', ha='right',
-                   fontsize=8, color='#34495e')
+                   fontsize=8, color='white')
         
         ax.set_yticks([])
-        ax.set_xlabel('Centralidade', fontsize=9, color='#7f8c8d')
+        ax.set_xlabel('Centralidade', fontsize=9, color='white')
+        ax.tick_params(colors='white')
         ax.set_title('Top 5 Cidades', fontsize=12, fontweight='bold',
-                    color='#2c3e50', pad=8)
+                    color='white', pad=8)
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.spines['left'].set_visible(False)
-        ax.grid(True, alpha=0.2, axis='x', linestyle='--')
+        ax.spines['bottom'].set_color('white')
+        ax.grid(True, alpha=0.3, axis='x', linestyle='--', color='white')
     
     def salvar_dashboard(self, nome_arquivo='dashboard_completo.png'):
         """Salva o dashboard em um arquivo."""
         if self.fig:
-            self.fig.savefig(nome_arquivo, dpi=300, bbox_inches='tight')
-            print(f"✓ Dashboard salvo em: {nome_arquivo}")
+            self.fig.savefig(nome_arquivo, dpi=300, bbox_inches='tight', 
+                           facecolor='#1a1a1a', edgecolor='none')
+            print(f"[OK] Dashboard salvo em: {nome_arquivo}")
         else:
-            print("⚠️  Dashboard não foi criado ainda. Execute criar_dashboard_completo() primeiro.")
+            print("[AVISO] Dashboard não foi criado ainda. Execute criar_dashboard_completo() primeiro.")
     
     def mostrar_dashboard(self):
         """Exibe o dashboard."""
         if self.fig:
             plt.show()
         else:
-            print("⚠️  Dashboard não foi criado ainda. Execute criar_dashboard_completo() primeiro.")
+            print("[AVISO] Dashboard não foi criado ainda. Execute criar_dashboard_completo() primeiro.")
 
 
 def criar_dashboard_interativo():
@@ -356,23 +368,23 @@ def criar_dashboard_interativo():
     print("="*60)
     
     # Criar rede de exemplo
-    print("\n📊 Carregando rede de distribuição...")
+    print("\n[INFO] Carregando rede de distribuição...")
     rede = criar_rede_exemplo()
     
     # Criar dashboard
-    print("🎨 Criando visualizações...")
+    print("[INFO] Criando visualizações...")
     dashboard = DashboardRotas(rede)
     dashboard.criar_dashboard_completo()
     
     # Salvar
-    print("💾 Salvando dashboard...")
+    print("[INFO] Salvando dashboard...")
     dashboard.salvar_dashboard()
     
     # Mostrar
-    print("📺 Exibindo dashboard...")
+    print("[INFO] Exibindo dashboard...")
     dashboard.mostrar_dashboard()
     
-    print("\n✓ Dashboard criado com sucesso!")
+    print("\n[OK] Dashboard criado com sucesso!")
 
 
 if __name__ == "__main__":

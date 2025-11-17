@@ -58,34 +58,37 @@ class RedeDistribuicao:
             aresta_removida: Tupla (origem, destino) da aresta removida
             salvar_arquivo: Nome do arquivo para salvar a imagem
         """
-        plt.figure(figsize=(14, 10))
+        # Configurar estilo escuro
+        plt.style.use('dark_background')
+        fig = plt.figure(figsize=(14, 10), facecolor='#1a1a1a')
+        ax = fig.add_subplot(111, facecolor='#1a1a1a')
         
         # Posicionamento dos nós usando layout spring
         pos = nx.spring_layout(self.grafo, k=2, iterations=50, seed=42)
         
-        # Desenhar todas as arestas em cinza claro
+        # Desenhar todas as arestas em cinza claro (mais forte)
         arestas_normais = [(u, v) for u, v in self.grafo.edges() 
                           if caminho_minimo is None or (u, v) not in caminho_minimo]
-        nx.draw_networkx_edges(self.grafo, pos, edgelist=arestas_normais, 
-                              edge_color='lightgray', width=1, alpha=0.5, 
-                              arrows=True, arrowsize=20, arrowstyle='->')
+        nx.draw_networkx_edges(self.grafo, pos, edgelist=arestas_normais, ax=ax,
+                              edge_color='#888888', width=2.5, alpha=0.7, 
+                              arrows=True, arrowsize=25, arrowstyle='->')
         
-        # Destacar caminho mínimo se fornecido
+        # Destacar caminho mínimo se fornecido (mais forte)
         if caminho_minimo:
-            nx.draw_networkx_edges(self.grafo, pos, edgelist=caminho_minimo, 
-                                  edge_color='green', width=3, alpha=0.8,
-                                  arrows=True, arrowsize=25, arrowstyle='->',
+            nx.draw_networkx_edges(self.grafo, pos, edgelist=caminho_minimo, ax=ax,
+                                  edge_color='#00ff00', width=5, alpha=0.9,
+                                  arrows=True, arrowsize=30, arrowstyle='->',
                                   style='dashed')
         
-        # Destacar aresta removida se fornecida
+        # Destacar aresta removida se fornecida (mais forte)
         if aresta_removida:
             if aresta_removida in self.grafo.edges():
-                nx.draw_networkx_edges(self.grafo, pos, edgelist=[aresta_removida], 
-                                      edge_color='red', width=2, alpha=0.5,
-                                      arrows=True, arrowsize=20, arrowstyle='->',
+                nx.draw_networkx_edges(self.grafo, pos, edgelist=[aresta_removida], ax=ax,
+                                      edge_color='#ff4444', width=4, alpha=0.8,
+                                      arrows=True, arrowsize=25, arrowstyle='->',
                                       style='dotted')
         
-        # Desenhar nós
+        # Desenhar nós (cores mais vibrantes)
         nos_armazem = [n for n in self.grafo.nodes() 
                       if self.grafo.nodes[n].get('tipo') == 'armazem']
         nos_clientes = [n for n in self.grafo.nodes() 
@@ -94,48 +97,58 @@ class RedeDistribuicao:
                      if self.grafo.nodes[n].get('tipo') not in ['armazem', 'cliente']]
         
         if nos_armazem:
-            nx.draw_networkx_nodes(self.grafo, pos, nodelist=nos_armazem, 
-                                  node_color='red', node_size=1500, 
-                                  node_shape='s', alpha=0.9)
+            nx.draw_networkx_nodes(self.grafo, pos, nodelist=nos_armazem, ax=ax,
+                                  node_color='#ff3333', node_size=2000, 
+                                  node_shape='s', alpha=1.0, edgecolors='white', linewidths=3)
         if nos_clientes:
-            nx.draw_networkx_nodes(self.grafo, pos, nodelist=nos_clientes, 
-                                  node_color='blue', node_size=1000, 
-                                  node_shape='o', alpha=0.9)
+            nx.draw_networkx_nodes(self.grafo, pos, nodelist=nos_clientes, ax=ax,
+                                  node_color='#3399ff', node_size=1500, 
+                                  node_shape='o', alpha=1.0, edgecolors='white', linewidths=3)
         if nos_outros:
-            nx.draw_networkx_nodes(self.grafo, pos, nodelist=nos_outros, 
-                                  node_color='lightblue', node_size=800, 
-                                  node_shape='o', alpha=0.7)
+            nx.draw_networkx_nodes(self.grafo, pos, nodelist=nos_outros, ax=ax,
+                                  node_color='#66ccff', node_size=1200, 
+                                  node_shape='o', alpha=0.9, edgecolors='white', linewidths=2)
         
-        # Labels dos nós
-        nx.draw_networkx_labels(self.grafo, pos, font_size=10, font_weight='bold')
+        # Labels dos nós (branco para contraste)
+        nx.draw_networkx_labels(self.grafo, pos, ax=ax, font_size=11, 
+                               font_weight='bold', font_color='white')
         
-        # Labels das arestas (custos)
+        # Labels das arestas (custos) - branco com fundo escuro
         labels_arestas = {}
         for u, v in self.grafo.edges():
             custo = self.grafo[u][v]['custo']
             labels_arestas[(u, v)] = f'{custo}'
         
-        nx.draw_networkx_edge_labels(self.grafo, pos, edge_labels=labels_arestas, 
-                                    font_size=8, font_color='darkblue')
+        nx.draw_networkx_edge_labels(self.grafo, pos, edge_labels=labels_arestas, ax=ax,
+                                    font_size=9, font_color='white',
+                                    bbox=dict(boxstyle='round,pad=0.3', 
+                                            facecolor='#2a2a2a', alpha=0.8, 
+                                            edgecolor='white', linewidth=1))
         
-        # Legenda
+        # Legenda (com fundo escuro)
         legenda = [
-            mpatches.Patch(color='red', label='Armazém'),
-            mpatches.Patch(color='blue', label='Cliente'),
-            mpatches.Patch(color='lightblue', label='Cidade Intermediária'),
+            mpatches.Patch(color='#ff3333', label='Armazém'),
+            mpatches.Patch(color='#3399ff', label='Cliente'),
+            mpatches.Patch(color='#66ccff', label='Cidade Intermediária'),
         ]
         if caminho_minimo:
-            legenda.append(mpatches.Patch(color='green', label='Caminho Mínimo'))
+            legenda.append(mpatches.Patch(color='#00ff00', label='Caminho Mínimo'))
         if aresta_removida:
-            legenda.append(mpatches.Patch(color='red', label='Estrada Removida (Falha)'))
+            legenda.append(mpatches.Patch(color='#ff4444', label='Estrada Removida (Falha)'))
         
-        plt.legend(handles=legenda, loc='upper left')
-        plt.title(titulo, fontsize=16, fontweight='bold')
+        legend = plt.legend(handles=legenda, loc='upper left', 
+                           facecolor='#2a2a2a', edgecolor='white', 
+                           labelcolor='white', framealpha=0.9)
+        legend.get_frame().set_linewidth(2)
+        
+        plt.title(titulo, fontsize=18, fontweight='bold', color='white', pad=20)
+        ax.set_facecolor('#1a1a1a')
         plt.axis('off')
         plt.tight_layout()
         
         if salvar_arquivo:
-            plt.savefig(salvar_arquivo, dpi=300, bbox_inches='tight')
+            plt.savefig(salvar_arquivo, dpi=300, bbox_inches='tight', 
+                       facecolor='#1a1a1a', edgecolor='none')
             print(f"Gráfico salvo em: {salvar_arquivo}")
         
         plt.show()
@@ -219,10 +232,10 @@ class RedeDistribuicao:
         
         if self.grafo.has_edge(cidade_origem, cidade_destino):
             self.grafo.remove_edge(cidade_origem, cidade_destino)
-            print(f"\n⚠️  FALHA SIMULADA: Estrada {cidade_origem} -> {cidade_destino} foi removida!")
+            print(f"\n[AVISO] FALHA SIMULADA: Estrada {cidade_origem} -> {cidade_destino} foi removida!")
             return grafo_backup
         else:
-            print(f"⚠️  A estrada {cidade_origem} -> {cidade_destino} não existe no grafo.")
+            print(f"[AVISO] A estrada {cidade_origem} -> {cidade_destino} não existe no grafo.")
             return None
     
     def restaurar_grafo(self, grafo_backup):
@@ -234,7 +247,7 @@ class RedeDistribuicao:
         """
         if grafo_backup:
             self.grafo = grafo_backup
-            print("✓ Grafo restaurado ao estado original.")
+            print("[OK] Grafo restaurado ao estado original.")
     
     def analisar_robustez(self):
         """
@@ -255,7 +268,7 @@ class RedeDistribuicao:
         
         # Analisar cada estrada
         estradas = list(self.grafo.edges())
-        print(f"\n📊 Total de estradas na rede: {len(estradas)}")
+        print(f"\n[INFO] Total de estradas na rede: {len(estradas)}")
         
         for origem, destino in estradas:
             # Simular remoção da estrada
@@ -309,7 +322,7 @@ class RedeDistribuicao:
             }
         
         # Analisar cidades críticas (nós de corte)
-        print(f"\n🏙️  Análise de Cidades:")
+        print(f"\n[ANALISE] Análise de Cidades:")
         for cidade in self.grafo.nodes():
             if cidade == self.armazem:
                 continue
@@ -327,7 +340,7 @@ class RedeDistribuicao:
                 })
         
         # Exibir resultados
-        print(f"\n🚨 Estradas Críticas encontradas: {len(analise['estradas_criticas'])}")
+        print(f"\n[CRITICO] Estradas Críticas encontradas: {len(analise['estradas_criticas'])}")
         for estrada_info in analise['estradas_criticas']:
             estrada = estrada_info['estrada']
             print(f"   • {estrada[0]} -> {estrada[1]}: {estrada_info['tipo']}")
@@ -336,7 +349,7 @@ class RedeDistribuicao:
             if 'impacto' in estrada_info:
                 print(f"     Impacto total: +{estrada_info['impacto']:.2f} unidades de custo")
         
-        print(f"\n🏙️  Cidades Críticas encontradas: {len(analise['cidades_criticas'])}")
+        print(f"\n[CRITICO] Cidades Críticas encontradas: {len(analise['cidades_criticas'])}")
         for cidade_info in analise['cidades_criticas']:
             print(f"   • {cidade_info['cidade']}: {cidade_info['razao']}")
             print(f"     Grau entrada: {cidade_info['grau_entrada']}, "
@@ -439,13 +452,13 @@ def executar_parte_1(rede):
     print("PARTE 1: REPRESENTAÇÃO DO GRAFO")
     print("="*60)
     
-    print(f"\n📊 Informações da Rede:")
+    print(f"\n[INFO] Informações da Rede:")
     print(f"   • Total de cidades: {rede.grafo.number_of_nodes()}")
     print(f"   • Total de estradas: {rede.grafo.number_of_edges()}")
     print(f"   • Armazém: {rede.armazem}")
     print(f"   • Clientes: {', '.join(rede.clientes)}")
     
-    print(f"\n🛣️  Estradas e Custos:")
+    print(f"\n[ESTRADAS] Estradas e Custos:")
     for origem, destino in rede.grafo.edges():
         custo = rede.grafo[origem][destino]['custo']
         print(f"   • {origem} -> {destino}: {custo} unidades")
@@ -463,21 +476,21 @@ def executar_parte_2(rede):
     print("="*60)
     
     if not rede.armazem:
-        print("⚠️  Nenhum armazém definido!")
+        print("[AVISO] Nenhum armazém definido!")
         return
     
     resultados = {}
     
     for cliente in rede.clientes:
-        print(f"\n📍 Calculando rota: {rede.armazem} -> {cliente}")
+        print(f"\n[ROTA] Calculando rota: {rede.armazem} -> {cliente}")
         caminho, custo = rede.calcular_caminho_minimo_manual(rede.armazem, cliente)
         
         if caminho:
-            print(f"   ✓ Caminho encontrado: {' -> '.join(caminho)}")
-            print(f"   ✓ Custo total: {custo} unidades")
+            print(f"   [OK] Caminho encontrado: {' -> '.join(caminho)}")
+            print(f"   [OK] Custo total: {custo} unidades")
             resultados[cliente] = (caminho, custo)
         else:
-            print(f"   ✗ Não há caminho disponível!")
+            print(f"   [ERRO] Não há caminho disponível!")
             resultados[cliente] = (None, None)
     
     # Visualizar com caminho mínimo destacado
@@ -506,24 +519,24 @@ def executar_parte_3(rede):
     # Vamos simular a falha de uma estrada importante
     estrada_falha = ("São Paulo", "Campinas")
     
-    print(f"\n🔧 Simulando falha na estrada: {estrada_falha[0]} -> {estrada_falha[1]}")
+    print(f"\n[SIMULACAO] Simulando falha na estrada: {estrada_falha[0]} -> {estrada_falha[1]}")
     
     grafo_backup = rede.simular_falha_estrada(estrada_falha[0], estrada_falha[1])
     
     if grafo_backup:
-        print(f"\n📊 Análise após falha:")
+        print(f"\n[ANALISE] Análise após falha:")
         
         rotas_alternativas = {}
         for cliente in rede.clientes:
-            print(f"\n📍 Rota alternativa: {rede.armazem} -> {cliente}")
+            print(f"\n[ROTA] Rota alternativa: {rede.armazem} -> {cliente}")
             caminho, custo = rede.calcular_caminho_minimo_manual(rede.armazem, cliente)
             
             if caminho:
-                print(f"   ✓ Rota alternativa encontrada: {' -> '.join(caminho)}")
-                print(f"   ✓ Novo custo: {custo} unidades")
+                print(f"   [OK] Rota alternativa encontrada: {' -> '.join(caminho)}")
+                print(f"   [OK] Novo custo: {custo} unidades")
                 rotas_alternativas[cliente] = (caminho, custo)
             else:
-                print(f"   ✗ Nenhuma rota alternativa disponível!")
+                print(f"   [ERRO] Nenhuma rota alternativa disponível!")
                 rotas_alternativas[cliente] = (None, None)
         
         # Visualizar com estrada removida
@@ -577,14 +590,14 @@ def executar_parte_5(rede):
     print("PARTE 5: COMPARAÇÃO DE RESULTADOS")
     print("="*60)
     
-    print("\n📊 Comparação de Rotas Alternativas:")
+    print("\n[COMPARACAO] Comparação de Rotas Alternativas:")
     
     if not rede.armazem or not rede.clientes:
-        print("⚠️  Armazém ou clientes não definidos!")
+        print("[AVISO] Armazém ou clientes não definidos!")
         return
     
     for cliente in rede.clientes:
-        print(f"\n📍 Todas as rotas possíveis: {rede.armazem} -> {cliente}")
+        print(f"\n[ROTA] Todas as rotas possíveis: {rede.armazem} -> {cliente}")
         rotas = rede.comparar_rotas(rede.armazem, cliente)
         
         if rotas:
@@ -594,9 +607,9 @@ def executar_parte_5(rede):
             if len(rotas) > 5:
                 print(f"   ... e mais {len(rotas) - 5} rotas")
         else:
-            print(f"   ✗ Nenhuma rota encontrada")
+            print(f"   [ERRO] Nenhuma rota encontrada")
     
-    print("\n📈 Estatísticas da Rede:")
+    print("\n[ESTATISTICAS] Estatísticas da Rede:")
     print(f"   • Densidade da rede: {nx.density(rede.grafo):.3f}")
     print(f"   • Grau médio: {sum(dict(rede.grafo.degree()).values()) / rede.grafo.number_of_nodes():.2f}")
     
@@ -679,7 +692,7 @@ def gerar_relatorio(rede, resultados_parte2, rotas_alternativas, analise_robuste
     with open("relatorio.txt", "w", encoding="utf-8") as f:
         f.write(conteudo)
     
-    print("\n✓ Relatório salvo em: relatorio.txt")
+    print("\n[OK] Relatório salvo em: relatorio.txt")
     return conteudo
 
 
@@ -710,7 +723,7 @@ def main():
     gerar_relatorio(rede, resultados_parte2, rotas_alternativas, analise_robustez)
     
     print("\n" + "="*60)
-    print("✓ EXECUÇÃO CONCLUÍDA!")
+    print("[OK] EXECUÇÃO CONCLUÍDA!")
     print("="*60)
     print("\nArquivos gerados:")
     print("  • parte1_rede_distribuicao.png")
