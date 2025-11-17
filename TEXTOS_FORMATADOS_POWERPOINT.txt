@@ -118,7 +118,47 @@ Adaptação dos conceitos observados na rede da PMM para otimização de rotas
 de entrega de mercadorias.
 
 ================================================================================
-SLIDE 5 - METODOLOGIA
+SLIDE 5 - LÓGICA DO PROJETO
+================================================================================
+
+[CAIXA DE TEXTO 1 - TÍTULO]
+LÓGICA DO PROJETO
+
+[CAIXA DE TEXTO 2 - CONCEITO PRINCIPAL]
+Modelagem da Rede como Grafo
+
+• Cidades = Nós (vértices)
+• Estradas = Arestas (com custo)
+• Tipos: Armazém, Clientes, Cidades Intermediárias
+
+[CAIXA DE TEXTO 3 - ALGORITMO]
+Cálculo Manual (Busca em Profundidade)
+
+1. Explora todos os caminhos possíveis entre origem e destino
+2. Calcula o custo total de cada caminho
+3. Seleciona o caminho de menor custo
+4. Não usa algoritmos avançados (Dijkstra) - método didático
+
+[CAIXA DE TEXTO 4 - ANÁLISE]
+Análise de Robustez
+
+• Remove uma estrada (aresta) do grafo
+• Verifica se ainda existe caminho alternativo
+• Identifica estradas críticas (sem alternativas)
+• Identifica cidades críticas (pontos únicos de passagem)
+• Calcula impacto de falhas (aumento de custo)
+
+[CAIXA DE TEXTO 5 - EXEMPLO]
+Exemplo Prático: São Paulo → Rio de Janeiro
+
+• Caminho 1: SP → RJ (custo: 430) ← Mínimo
+• Caminho 2: SP → Campinas → RJ (custo: 450)
+• Caminho 3: SP → Sorocaba → Campinas → RJ (custo: 560)
+
+O sistema escolhe automaticamente a rota de menor custo.
+
+================================================================================
+SLIDE 6 - METODOLOGIA
 ================================================================================
 
 [CAIXA DE TEXTO 1 - TÍTULO]
@@ -157,7 +197,7 @@ METODOLOGIA
 • Comparação de resultados
 
 ================================================================================
-SLIDE 6 - RESULTADOS
+SLIDE 7 - RESULTADOS
 ================================================================================
 
 [CAIXA DE TEXTO 1 - TÍTULO]
@@ -196,7 +236,7 @@ Ferramentas Desenvolvidas
 • Relatórios automáticos
 
 ================================================================================
-SLIDE 7 - CONCLUSÕES
+SLIDE 8 - CONCLUSÕES
 ================================================================================
 
 [CAIXA DE TEXTO 1 - TÍTULO]
@@ -224,7 +264,7 @@ Aprendizados: Modelagem de problemas reais, análise de grafos, visualização
 de dados e desenvolvimento de soluções práticas.
 
 ================================================================================
-SLIDE 8 - AGRADECIMENTOS
+SLIDE 9 - AGRADECIMENTOS
 ================================================================================
 
 [CAIXA DE TEXTO 1 - TÍTULO]
@@ -244,7 +284,7 @@ INSTRUÇÕES DE USO
 ================================================================================
 
 1. Abra PowerPoint ou Google Slides
-2. Crie 8 slides em branco
+2. Crie 9 slides em branco
 3. Para cada slide, copie o texto correspondente
 4. Cole nas caixas de texto dos slides
 5. Ajuste fontes e tamanhos conforme necessário

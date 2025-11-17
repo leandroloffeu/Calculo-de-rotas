@@ -117,7 +117,47 @@ Adaptação dos conceitos observados na rede da PMM para otimização de rotas
 de entrega de mercadorias.
 
 ================================================================================
-SLIDE 5: METODOLOGIA
+SLIDE 5: LÓGICA DO PROJETO
+================================================================================
+
+TÍTULO:
+LÓGICA DO PROJETO
+
+CONCEITO PRINCIPAL:
+Modelagem da Rede como Grafo
+
+• Cidades = Nós (vértices)
+• Estradas = Arestas (com custo)
+• Tipos: Armazém, Clientes, Cidades Intermediárias
+
+ALGORITMO DE CAMINHO MÍNIMO:
+Cálculo Manual (Busca em Profundidade)
+
+1. Explora todos os caminhos possíveis entre origem e destino
+2. Calcula o custo total de cada caminho
+3. Seleciona o caminho de menor custo
+4. Não usa algoritmos avançados (Dijkstra) - método didático
+
+ANÁLISE DE ROBUSTEZ:
+Simulação de Falhas
+
+• Remove uma estrada (aresta) do grafo
+• Verifica se ainda existe caminho alternativo
+• Identifica estradas críticas (sem alternativas)
+• Identifica cidades críticas (pontos únicos de passagem)
+• Calcula impacto de falhas (aumento de custo)
+
+EXEMPLO PRÁTICO:
+São Paulo → Rio de Janeiro
+
+• Caminho 1: SP → RJ (custo: 430) ← Mínimo
+• Caminho 2: SP → Campinas → RJ (custo: 450)
+• Caminho 3: SP → Sorocaba → Campinas → RJ (custo: 560)
+
+O sistema escolhe automaticamente a rota de menor custo.
+
+================================================================================
+SLIDE 6: METODOLOGIA
 ================================================================================
 
 TÍTULO:
@@ -156,7 +196,7 @@ ETAPA 4:
 • Comparação de resultados
 
 ================================================================================
-SLIDE 6: RESULTADOS PRINCIPAIS
+SLIDE 7: RESULTADOS PRINCIPAIS
 ================================================================================
 
 TÍTULO:
@@ -195,7 +235,7 @@ Ferramentas Desenvolvidas
 • Relatórios automáticos
 
 ================================================================================
-SLIDE 7: CONCLUSÕES
+SLIDE 8: CONCLUSÕES
 ================================================================================
 
 TÍTULO:
@@ -223,7 +263,7 @@ Aprendizados: Modelagem de problemas reais, análise de grafos, visualização
 de dados e desenvolvimento de soluções práticas.
 
 ================================================================================
-SLIDE 8: AGRADECIMENTOS
+SLIDE 9: AGRADECIMENTOS
 ================================================================================
 
 TÍTULO:
@@ -265,7 +305,15 @@ análises avançadas. A aplicação prática foi adaptar os conceitos da rede PM
 transformando sites em cidades, links P2P em estradas, e métricas de tráfego em 
 custos de transporte.
 
-EXPLICAÇÃO SLIDE 5 (METODOLOGIA):
+EXPLICAÇÃO SLIDE 5 (LÓGICA):
+A lógica do projeto é baseada em teoria de grafos. Transformamos o problema real 
+de logística em um grafo direcionado, onde cidades são nós e estradas são arestas 
+com custos. O algoritmo de caminho mínimo funciona explorando todos os caminhos 
+possíveis usando busca em profundidade, calculando o custo de cada um e escolhendo 
+o menor. A análise de robustez simula falhas removendo estradas e verificando se 
+ainda existem rotas alternativas. Isso identifica pontos críticos da rede.
+
+EXPLICAÇÃO SLIDE 6 (METODOLOGIA):
 Desenvolvemos o projeto em quatro etapas principais. Primeiro, modelamos a rede 
 como um grafo usando NetworkX. Depois, implementamos um método manual de cálculo 
 de caminhos mínimos usando busca em profundidade, sem algoritmos avançados, para 
@@ -273,14 +321,14 @@ compreender melhor os conceitos fundamentais. Em seguida, analisamos a robustez
 simulando falhas. Por fim, criamos visualizações interativas para facilitar a 
 compreensão.
 
-EXPLICAÇÃO SLIDE 6 (RESULTADOS):
+EXPLICAÇÃO SLIDE 7 (RESULTADOS):
 Conseguimos modelar uma rede com 7 cidades e 12 estradas, conectando um armazém 
 em São Paulo a três clientes principais. Calculamos os caminhos mínimos para cada 
 cliente e identificamos estradas críticas que, se falharem, tornam algumas rotas 
 impossíveis. Desenvolvemos dashboards interativos que mostram todas essas análises 
 de forma visual e intuitiva.
 
-EXPLICAÇÃO SLIDE 7 (CONCLUSÕES):
+EXPLICAÇÃO SLIDE 8 (CONCLUSÕES):
 O projeto foi muito enriquecedor. Conseguimos aplicar teoria de grafos em um 
 problema real, usando a estrutura da PMM como referência. O método manual nos 
 permitiu entender profundamente como funcionam os algoritmos de caminho mínimo. 
